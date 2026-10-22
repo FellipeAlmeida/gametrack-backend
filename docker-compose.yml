@@ -1,0 +1,35 @@
+services:
+
+  db:
+    container_name: gametrack-db
+    image: postgres:16-alpine
+    ports: 
+      - 5432:5432
+    env_file: .env
+    networks: 
+      - rede_local
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+
+  api:
+    container_name: gametrack-api
+    build: 
+      context: .
+    ports: 
+      - 3000:3000
+    env_file: .env
+    networks: 
+      - rede_local
+
+  adminer:
+    container_name: gametrack-adminer
+    image: adminer
+    networks:
+      - rede_local
+  
+networks:
+  rede_local:
+    driver: bridge
+
+volumes:
+  postgres_data:
