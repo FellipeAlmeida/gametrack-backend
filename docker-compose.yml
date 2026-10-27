@@ -10,6 +10,11 @@ services:
       - rede_local
     volumes:
       - "postgres_data:/var/lib/postgresql/data"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d gametrack-db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   api:
     container_name: gametrack-api
@@ -20,9 +25,14 @@ services:
     env_file: .env
     networks: 
       - rede_local
+    depends_on:
+      db:
+        condition: service_healthy
 
   adminer:
     container_name: gametrack-adminer
+    ports: 
+      - 8080:8080
     image: adminer
     networks:
       - rede_local
