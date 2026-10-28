@@ -1,4 +1,5 @@
 import pool from '../database/database.js'
+import ApiError from '../error/api.error.js'
 
 // --------------------- CRIA ---------------------
 
@@ -6,7 +7,7 @@ export async function criaJogoService(body){
     const { titulo, capa_url, descricao, genero, plataforma } = body
 
     if (!titulo){
-        throw new Error('Jogo deve ter titulo.')
+        throw new ApiError('Jogo deve ter titulo.', 400)
     }
 
     await pool.query(`INSERT INTO jogo (titulo, capa_url, descricao, genero, plataforma) 
@@ -17,11 +18,20 @@ export async function criaJogoService(body){
 
 // --------------------- LISTA ---------------------
 
-export async function listaJogoService(){
-    const jogos = await pool.query(`SELECT * FROM jogo`)
+export async function listaJogoService(genero){
+
+    let query = 'SELECT * FROM jogo'
+    const valores = []
+
+    if (genero) {
+        query += ' WHERE genero = $1'
+        valores.push(genero)
+    }
+
+    const jogos = await pool.query(query, valores)
 
     if (jogos.rows.length <= 0){
-        throw new Error('Sem jogos disponiveis.')
+        throw new ApiError('Sem jogos disponiveis.', 404)
     }
 
     return jogos['rows']
@@ -34,7 +44,7 @@ export async function buscaJogoService(id){
     const jogo = await pool.query(`SELECT * FROM jogo WHERE id = $1`, [id])
 
     if (jogo.rows.length == 0){ 
-        throw new Error('Jogo não existe')
+        throw new ApiError('Jogo não existe', 404)
     }
 
     return jogo['rows']
@@ -49,15 +59,15 @@ export async function editaJogoService(id, body){
     const jogo = await pool.query(`SELECT * FROM jogo WHERE id = $1`, [id])
 
     if (jogo.rows.length <= 0){
-        throw new Error('Jogo não existe')
+        throw new ApiError('Jogo não existe', 404)
     }
 
     if (!titulo && !capa_url && !descricao && !genero && !plataforma) {
-        throw new Error('Informe os dados que deseja atualizar.');
+        throw new ApiError('Informe os dados que deseja atualizar.', 400);
     }
 
     if (titulo == undefined){
-        throw new Error('Titulo não pode ser undefined.');
+        throw new ApiError('Titulo não pode ser undefined.', 400);
     }
 
     await pool.query(`UPDATE jogo SET titulo = $1, capa_url = $2, descricao = $3, genero = $4, plataforma = $5 WHERE id = $6`, 
@@ -71,7 +81,7 @@ export async function deletaJogoService(id){
     const jogo = await pool.query(`SELECT * FROM jogo WHERE id = $1`, [id])
 
     if (jogo.rows.length <= 0){
-        throw new Error('Jogo não existe')
+        throw new ApiError('Jogo não existe', 404)
     }
 
     await pool.query(`DELETE FROM jogo WHERE id = $1`, [id])

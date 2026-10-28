@@ -9,7 +9,7 @@ export async function criaAvaliacao(req, res){
         await criaAvaliacaoService(req.body)
         return res.status(201).json({message: 'Avaliação criada com sucesso!'})
     } catch (error) {
-        return res.status(500).json({erro: error.message})
+        return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }
 
@@ -17,10 +17,12 @@ export async function criaAvaliacao(req, res){
 
 export async function listaAvaliacao(req, res){
     try{
-        const avaliacoes = await listaAvaliacaoService(req.body)
+        const jogo_id = req.query.jogo_id
+
+        const avaliacoes = await listaAvaliacaoService(jogo_id)
         return res.status(201).json({avaliacoes: avaliacoes})
     } catch (error) {
-        return res.status(500).json({erro: error.message})
+        return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }
 
@@ -33,7 +35,7 @@ export async function buscaAvaliacao(req, res){
         const avaliacao = await buscaAvaliacaoService(id)
         return res.status(201).json({avaliacao: avaliacao})
     } catch (error) {
-        return res.status(500).json({erro: error.message})
+        return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }
 
@@ -47,7 +49,7 @@ export async function editaAvaliacao(req, res){
         await editaAvaliacaoService(id, req.body)
         return res.status(201).json({message: 'Avaliação editada com sucesso!'})
     } catch (error) {
-        return res.status(500).json({erro: error.message})
+        return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }
 
@@ -60,6 +62,6 @@ export async function deletaAvaliacao(req, res){
         await deletaAvaliacaoService(id)
         return res.status(201).json({message: 'Avaliação deletada com sucesso!'})
     } catch (error) {
-        return res.status(500).json({erro: error.message})
+        return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }

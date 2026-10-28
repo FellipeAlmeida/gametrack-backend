@@ -1,4 +1,5 @@
 import pool from '../database/database.js'
+import ApiError from '../error/api.error.js'
 
 function somaAvaliacoes(avaliacoes){
     let count = 0
@@ -16,7 +17,7 @@ export async function criaAvaliacaoService(body){
     const { jogo_id, nome_avaliador, nota, review } = body
 
     if (!jogo_id || !nome_avaliador || !nota){
-        throw new Error('Preencha todos os campos obrigatórios.')
+        throw new ApiError('Preencha todos os campos obrigatórios.', 400)
     }
 
     await pool.query(`INSERT INTO avaliacao (jogo_id, nome_avaliador, nota, review) 
@@ -32,11 +33,19 @@ export async function criaAvaliacaoService(body){
 
 // --------------------- LISTA ---------------------
 
-export async function listaAvaliacaoService(){
-    const avaliacoes = await pool.query(`SELECT * FROM avaliacao`)
+export async function listaAvaliacaoService(jogo_id){
+    let query = `SELECT * FROM avaliacao`
+    const valores = []
 
-    if (avaliacoes.rows.length <= 0){
-        throw new Error('Sem avaliações disponiveis.')
+    if (jogo_id){
+        query += ` WHERE jogo_id = $1`
+        valores.push(jogo_id)
+    }
+
+    const avaliacoes = await pool.query(query, valores)
+
+    if (avaliacoes.rows.length == 0){
+        throw new ApiError('Sem avaliações disponiveis.', 404)
     }
 
     return avaliacoes['rows']
@@ -48,8 +57,8 @@ export async function buscaAvaliacaoService(id){
 
     const avaliacao = await pool.query(`SELECT * FROM avaliacao WHERE id = $1`, [id])
 
-    if (avaliacao.rows.length <= 0){ 
-        throw new Error('Avaliacao não existe')
+    if (avaliacao.rows.length == 0){ 
+        throw new ApiError('Avaliacao não existe', 404)
     }
 
     return avaliacao['rows']
@@ -63,12 +72,12 @@ export async function editaAvaliacaoService(id, body){
 
     const avaliacao = await pool.query(`SELECT * FROM avaliacao WHERE id = $1`, [id])
 
-    if (avaliacao.rows.length <= 0){
-        throw new Error('Avaliacao não existe')
+    if (avaliacao.rows.length == 0){
+        throw new ApiError('Avaliacao não existe', 404)
     }
 
     if (!jogo_id && !nome_avaliador && !nota && !review) {
-        throw new Error('Informe os dados que deseja atualizar.');
+        throw new ApiError('Informe os dados que deseja atualizar.', 400);
     }
 
     await pool.query(`UPDATE avaliacao SET jogo_id = $1, nome_avaliador = $2, nota = $3, review = $4 WHERE id = $5`, 
@@ -81,8 +90,8 @@ export async function deletaAvaliacaoService(id){
 
     const avaliacao = await pool.query(`SELECT * FROM avaliacao WHERE id = $1`, [id])
 
-    if (avaliacao.rows.length <= 0){
-        throw new Error('Avaliacao não existe')
+    if (avaliacao.rows.length == 0){
+        throw new ApiError('Avaliacao não existe', 404)
     }
 
     await pool.query(`DELETE FROM avaliacao WHERE id = $1`, [id])

@@ -9,7 +9,7 @@ export async function criaJogo(req, res){
         await criaJogoService(req.body)
         return res.status(201).json({message: 'Jogo criado com sucesso!'})
     } catch (error) {
-        return res.status(500).json({erro: error.message})
+        return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }
 
@@ -17,10 +17,12 @@ export async function criaJogo(req, res){
 
 export async function listaJogo(req, res){
     try{
-        const jogos = await listaJogoService()
+        const genero = req.query.genero
+
+        const jogos = await listaJogoService(genero)
         return res.status(200).json({jogos: jogos})
     } catch (error) {
-        return res.status(500).json({erro: error.message})
+        return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }
 
@@ -33,7 +35,7 @@ export async function buscaJogo(req, res){
         const jogo = await buscaJogoService(id)
         return res.status(200).json({jogo: jogo})
     } catch (error) {
-        return res.status(500).json({erro: error.message})
+        return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }
 
@@ -47,7 +49,7 @@ export async function editaJogo(req, res){
         await editaJogoService(id, req.body)
         return res.status(200).json({message: 'Jogo editado com sucesso!'})
     } catch (error) {
-        return res.status(500).json({erro: error.message})
+        return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }
 
@@ -60,6 +62,6 @@ export async function deletaJogo(req, res){
         await deletaJogoService(id)
         return res.status(200).json({message: "Jogo deletado com sucesso!"})
     } catch (error) {
-        return res.status(500).json({erro: error.message})
+        return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }
