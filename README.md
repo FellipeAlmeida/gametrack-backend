@@ -31,7 +31,7 @@ POSTGRES_PASSWORD=123
 **Passo 3** - Comando Docker
 
 ```
-Docker compose up -d --build
+docker compose up -d --build
 ```
 
 ## Saídas da Bancada
