@@ -10,13 +10,21 @@ async function conectaEPopulaBanco() {
         console.log("Criando tabelas...")
 
         await pool.query(`
+            CREATE TYPE plataforma_enum AS ENUM (
+                'PC',
+                'PlayStation',
+                'Xbox',
+                'Nintendo Switch'
+            );`)
+
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS jogo (
                 id SERIAL PRIMARY KEY,
                 titulo VARCHAR NOT NULL UNIQUE,
                 capa_url VARCHAR,
                 descricao TEXT,
                 genero VARCHAR,
-                plataforma VARCHAR,
+                plataforma plataforma_enum[],
                 nota_media DECIMAL DEFAULT 0,
                 criado_em TIMESTAMP DEFAULT NOW()
             );`)

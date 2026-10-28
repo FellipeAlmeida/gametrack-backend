@@ -6,6 +6,27 @@ import ApiError from '../error/api.error.js'
 export async function criaJogoService(body){
     const { titulo, capa_url, descricao, genero, plataforma } = body
 
+    const plataformasValidas = [
+        'PC',
+        'PlayStation',
+        'Xbox',
+        'Nintendo Switch'
+    ];
+
+    if (!Array.isArray(plataforma)){
+        throw new ApiError('Plataforma deve ser um array.', 400);
+    }
+
+    if (plataforma.length === 0){
+        throw new ApiError('Plataforma deve ter pelo menos um valor.', 400);
+    }
+
+    for (const p of plataforma) {
+        if (!plataformasValidas.includes(p)) {
+            throw new ApiError('Plataforma inválida: ' + p, 400);
+        }
+    }   
+
     if (!titulo){
         throw new ApiError('Jogo deve ter titulo.', 400)
     }

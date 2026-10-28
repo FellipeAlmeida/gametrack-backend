@@ -16,6 +16,10 @@ function somaAvaliacoes(avaliacoes){
 export async function criaAvaliacaoService(body){
     const { jogo_id, nome_avaliador, nota, review } = body
 
+    if (nota < 1 || nota > 5){
+        throw new ApiError('Nota deve ser entre 1 a 5.', 400)
+    }
+
     if (!jogo_id || !nome_avaliador || !nota){
         throw new ApiError('Preencha todos os campos obrigatórios.', 400)
     }
