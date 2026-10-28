@@ -37,3 +37,13 @@ Docker compose up -d --build
 ## Saídas da Bancada
 
 ## Resposta
+
+#### "não preciso de back-end, faço tudo em JavaScript no navegador, inclusive acessar o banco de dados".
+
+**Pontos importantes a serem discutidos:**
+
+- **Segurança:** o código JavaScript executado no navegador pode ser inspecionado. Colocar credenciais do banco de dados no front-end expõe informações sensíveis e pode permitir que terceiros acessem ou modifiquem os dados.
+
+- **Desempenho:** executar operações pesadas no navegador pode prejudicar a experiência do usuário. Um back-end permite centralizar regras de negócio, processar dados e realizar consultas ao banco de forma controlada.
+
+- **Integridade dos dados:** quando as validações e regras de negócio ficam exclusivamente no JavaScript do navegador, os usuários podem contorná-las e enviar dados inválidos diretamente ao banco de dados, caso o acesso direto seja possível. Isso pode comprometer a integridade dos dados.
