@@ -1,5 +1,7 @@
-echo 'Rodando as migrations!'
-node app/migrations.js
+#!/bin/sh
 
-echo 'Rodando servidor web!'
-node app/server.js
+echo "Rodando as migrations!"
+node /app/app/migrations.js || exit 1
+
+echo "Rodando servidor web!"
+exec node /app/app/server.js
