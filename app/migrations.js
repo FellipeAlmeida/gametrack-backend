@@ -4,7 +4,7 @@ async function conectaEPopulaBanco() {
     try {
 
         console.log("Testando conexão com o banco...")
-        await pool.query("SELECT 1")
+        await pool.query("SELECT 1") // retorna 1, apenas teste pra ve se o banco ta vivo
 
         console.log("Conectado ao banco!")
         console.log("Criando tabelas...")
@@ -43,15 +43,11 @@ async function conectaEPopulaBanco() {
                     REFERENCES jogo(id)
             );`)
 
-        await pool.query(`INSERT INTO jogo (titulo, capa_url, descricao, genero, plataforma) 
-            VALUES('Elden Ring', 'https://upload.wikimedia.org/wikipedia/pt/0/0d/Elden_Ring_capa.jpg', 'Jogo de aventura', 'medieval', 'ps5, pc, xbox') 
-            ON CONFLICT (titulo) DO NOTHING`)
-
-        console.log("Tabelas criadas e banco populado!")
+        console.log("Tabelas criadas!")
 
     } catch (error) {
         console.error("Erro ao conectar no banco:", error)
-        process.exit(1) // PARA O SERVIDOR
+        process.exit(1) // mata o processo impedindo que a aplicacao suba com o banco invalido
     }
 }
 
