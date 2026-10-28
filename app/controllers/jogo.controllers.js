@@ -60,7 +60,7 @@ export async function deletaJogo(req, res){
         const id = req.params.id
 
         await deletaJogoService(id)
-        return res.status(200).json({message: "Jogo deletado com sucesso!"})
+        return res.status(204).json({message: "Jogo deletado com sucesso!"})
     } catch (error) {
         return res.status(error.statusCode || 500).json({erro: error.message})
     }

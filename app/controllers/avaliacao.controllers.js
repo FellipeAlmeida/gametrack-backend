@@ -20,7 +20,7 @@ export async function listaAvaliacao(req, res){
         const jogo_id = req.query.jogo_id
 
         const avaliacoes = await listaAvaliacaoService(jogo_id)
-        return res.status(201).json({avaliacoes: avaliacoes})
+        return res.status(200).json({avaliacoes: avaliacoes})
     } catch (error) {
         return res.status(error.statusCode || 500).json({erro: error.message})
     }
@@ -33,7 +33,7 @@ export async function buscaAvaliacao(req, res){
         const id = req.params.id
 
         const avaliacao = await buscaAvaliacaoService(id)
-        return res.status(201).json({avaliacao: avaliacao})
+        return res.status(200).json({avaliacao: avaliacao})
     } catch (error) {
         return res.status(error.statusCode || 500).json({erro: error.message})
     }
@@ -47,7 +47,7 @@ export async function editaAvaliacao(req, res){
         const id = req.params.id
 
         await editaAvaliacaoService(id, req.body)
-        return res.status(201).json({message: 'Avaliação editada com sucesso!'})
+        return res.status(200).json({message: 'Avaliação editada com sucesso!'})
     } catch (error) {
         return res.status(error.statusCode || 500).json({erro: error.message})
     }
@@ -60,7 +60,7 @@ export async function deletaAvaliacao(req, res){
         const id = req.params.id
 
         await deletaAvaliacaoService(id)
-        return res.status(201).json({message: 'Avaliação deletada com sucesso!'})
+        return res.status(204).json({message: 'Avaliação deletada com sucesso!'})
     } catch (error) {
         return res.status(error.statusCode || 500).json({erro: error.message})
     }
