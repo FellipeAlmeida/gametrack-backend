@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><title>Adicionar avaliação · checkpoint</title></head>
+<body>
+<header class="header"><div class="brand"><a class="logo" href="index.html"><span class="logo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h4M8 9v4M15 12h.01M18 10h.01"/><path d="M17.3 5H6.7a4 4 0 0 0-3.9 3.2L2 15a3 3 0 0 0 5.2 2.3L9 15h6l1.800 2.300A3 3 0 0 0 22 15l-.8-6.800A4 4 0 0 0 17.300 5Z"/></svg></span>checkpoint</a><span class="tagline">Jogue. Conte.</span></div>
+<nav class="nav"><a href="index.html">Avaliações</a><a href="adicionar-jogo.html">Adicionar jogo</a><a class="btn btn-primary" href="adicionar-avaliacao.html"><svg width="12" height="12" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 1v10M1 6h10"/></svg> Avaliar um jogo</a></nav></header>
+<main class="page">
+<a class="back" href="index.html"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6H2m4-4L2 6l4 4"/></svg> Voltar para avaliações</a>
+<h1>Adicionar avaliação</h1>
+<form class="form-card">
+<div class="form-head"><h2>Sua avaliação</h2><span class="required-note">* Campos obrigatórios</span></div>
+<div class="field"><label for="jogo">Jogo <i>*</i></label>
+<select class="input" id="jogo" name="jogo" required><option>Elden Ring</option><option>Hollow Knight</option><option selected>Hades</option><option>Celeste</option></select>
+<p class="hint">Não encontrou o jogo? <a href="adicionar-jogo.html">Adicionar ao catálogo ↗</a></p></div>
+<div class="field"><label for="avaliador">Nome do avaliador <i>*</i></label><input class="input" id="avaliador" name="avaliador" required value="Marina Costa"></div>
+<fieldset class="field" style="border:0">
+<div class="rating-head"><span class="label">Sua nota <i>*</i></span><output id="nota-label">5 de 5 · Favorito</output></div>
+<div class="rating">
+<label><input type="radio" name="nota" value="1" required>★ 1</label>
+<label><input type="radio" name="nota" value="2">★ 2</label>
+<label><input type="radio" name="nota" value="3">★ 3</label>
+<label><input type="radio" name="nota" value="4">★ 4</label>
+<label><input type="radio" name="nota" value="5" checked>★ 5</label>
+</div></fieldset>
+<div class="field"><label for="review">Review (opcional)</label><textarea class="input" id="review" name="review">Cada tentativa tem uma história nova. O combate é ágil, a trilha é incrível e os personagens fazem até a derrota valer a pena. Sempre digo "só mais uma" e fico por horas. Virou um dos meus favoritos.</textarea></div>
+<div class="actions"><a class="btn" href="index.html">Cancelar</a><button class="btn btn-primary" type="submit">Publicar avaliação</button></div>
+</form>
+</main>
+<footer class="footer"><span><b>checkpoint</b> / Cada jogo, uma história.</span><span>Feito para quem joga. Aberto a todo mundo.</span></footer>
+<script>
+const nomes=["Fraco","Regular","Bom","Ótimo","Favorito"],saida=document.getElementById("nota-label");
+document.querySelectorAll('input[name="nota"]').forEach(r=>r.addEventListener("change",()=>saida.textContent=r.value+" de 5 · "+nomes[r.value-1]));
+</script>
+</body></html>
