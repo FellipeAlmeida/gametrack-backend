@@ -11,8 +11,8 @@ app.get('/', (req, res) => {
 
 app.use(cors())
 app.use(express.json()); 
-app.use('/api/jogo', jogoRoutes)
-app.use('/api/avaliacao', avaliacaoRoutes)
+app.use('/api', jogoRoutes)
+app.use('/api', avaliacaoRoutes)
 
 app.listen(3000, () => {
     console.log('servidor iniciado!')

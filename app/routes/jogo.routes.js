@@ -3,10 +3,10 @@ import { criaJogo, editaJogo, deletaJogo, buscaJogo, listaJogo } from '../contro
 
 const jogoRoutes = Router()
 
-jogoRoutes.post('/', criaJogo)
-jogoRoutes.get('/', listaJogo)
-jogoRoutes.get('/:id', buscaJogo)
-jogoRoutes.patch('/:id', editaJogo)
-jogoRoutes.delete('/:id', deletaJogo)
+jogoRoutes.post('/jogo', criaJogo)
+jogoRoutes.get('/jogo', listaJogo)
+jogoRoutes.get('/jogo/:id', buscaJogo)
+jogoRoutes.patch('/jogo/:id', editaJogo)
+jogoRoutes.delete('/jogo/:id', deletaJogo)
 
 export default jogoRoutes
