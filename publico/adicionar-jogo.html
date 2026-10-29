@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap"
+            rel="stylesheet"
+        >
+
+        <link rel="stylesheet" href="style.css">
+
+        <title>Adicionar jogo · checkpoint</title>
+    </head>
+
+    <body>
+        <header class="header">
+            <a class="logo" href="index.html">
+                <span class="logo-icon">
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M6 11h4M8 9v4M15 12h.01M18 10h.01"/>
+                        <path d="M17.3 5H6.7a4 4 0 0 0-3.9 3.2L2 15a3 3 0 0 0 5.2 2.3L9 15h6l1.800 2.300A3 3 0 0 0 22 15l-.8-6.800A4 4 0 0 0 17.300 5Z"/>
+                    </svg>
+                </span>
+                checkpoint
+            </a>
+
+            <nav class="nav">
+                <a href="index.html">Avaliações</a>
+                <a class="active" href="adicionar-jogo.html">Adicionar jogo</a>
+
+                <a class="btn btn-primary" href="adicionar-avaliacao.html">
+                    <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    >
+                        <path d="M6 1v10M1 6h10"/>
+                    </svg>
+                    Avaliar um jogo
+                </a>
+            </nav>
+        </header>
+
+        <main class="page">
+            <a class="back" href="index.html">
+                <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M10 6H2m4-4L2 6l4 4"/>
+                </svg>
+                Voltar para avaliações
+            </a>
+
+            <h1>Adicionar jogo</h1>
+
+            <form class="form-card">
+                <div class="form-head">
+                    <h2>Informações do jogo</h2>
+                    <span class="required-note">* Campo obrigatório</span>
+                </div>
+
+                <div class="field">
+                    <label for="titulo">Título do jogo <i>*</i></label>
+                    <input
+                        class="input"
+                        id="titulo"
+                        name="titulo"
+                        required
+                        value="Outer Wilds"
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="capa">URL da capa</label>
+                    <input
+                        class="input"
+                        id="capa"
+                        name="capa"
+                        type="url"
+                        value="https://cdn.akamai.steamstatic.com/steam/apps/753640/library_600x900.jpg"
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="descricao">Descrição</label>
+                    <textarea class="input" id="descricao" name="descricao">Explore um sistema solar cheio de mistérios em uma aventura espacial de mundo aberto. Descubra os segredos de uma civilização perdida e encontre respostas antes que o tempo recomece.</textarea>
+                </div>
+
+                <div class="field">
+                    <label for="genero">Gênero</label>
+                    <input
+                        class="input"
+                        id="genero"
+                        name="genero"
+                        value="Aventura e exploração"
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="plataforma">Plataforma</label>
+                    <input
+                        class="input"
+                        id="plataforma"
+                        name="plataforma"
+                        value="PC, PlayStation 4, Nintendo Switch"
+                    >
+                </div>
+
+                <div class="actions">
+                    <a class="btn" href="index.html">Cancelar</a>
+
+                    <button class="btn btn-primary" type="submit">
+                        <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 12 12"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        >
+                            <path d="M6 1v10M1 6h10"/>
+                        </svg>
+                        Adicionar jogo
+                    </button>
+                </div>
+            </form>
+        </main>
+    </body>
+</html>
