@@ -41,16 +41,16 @@ export async function listaAvaliacaoService(jogo_id){
     let query = `SELECT * FROM avaliacao`
     const valores = []
 
+    if (typeof jogo_id !== "number" || isNaN(jogo_id)){ // <-- se for diferente de number ou not a number
+        throw new ApiError('ID do jogo deve ser number', 404)
+    }
+
     if (jogo_id){
         query += ` WHERE jogo_id = $1`
         valores.push(jogo_id)
     }
 
     const avaliacoes = await pool.query(query, valores)
-
-    if (avaliacoes.rows.length == 0){
-        throw new ApiError('Sem avaliações disponiveis.', 404)
-    }
 
     return avaliacoes['rows']
 }

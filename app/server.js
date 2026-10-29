@@ -17,8 +17,8 @@ app.get('/status', (req, res) => {
     res.send({'status_server': 'active'})
 })
 
-app.use('/api/jogo', jogoRoutes)
-app.use('/api/avaliacao', avaliacaoRoutes)
+app.use('/api', jogoRoutes)
+app.use('/api', avaliacaoRoutes)
 
 app.listen(3000, () => {
     console.log('servidor iniciado!')

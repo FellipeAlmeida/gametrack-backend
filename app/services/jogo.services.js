@@ -43,6 +43,10 @@ export async function listaJogoService(genero){
 
     let query = 'SELECT * FROM jogo'
     const valores = []
+    
+    if (genero && (typeof genero !== "string" || !isNaN(genero))){ // <-- se for diferente de str ou se for number 
+        throw new ApiError('Gênero precisa ser string', 404)
+    }
 
     if (genero) {
         query += ' WHERE genero = $1'
@@ -50,10 +54,6 @@ export async function listaJogoService(genero){
     }
 
     const jogos = await pool.query(query, valores)
-
-    if (jogos.rows.length <= 0){
-        throw new ApiError('Sem jogos disponiveis.', 404)
-    }
 
     return jogos['rows']
 }
