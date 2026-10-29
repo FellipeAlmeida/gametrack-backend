@@ -20,8 +20,12 @@ export async function criaAvaliacaoService(body){
         throw new ApiError('Nota deve ser entre 1 a 5.', 400)
     }
 
-    if (!jogo_id || !nome_avaliador || !nota){
-        throw new ApiError('Preencha todos os campos obrigatórios.', 400)
+    if (nome_avaliador.trim().length < 3){
+        throw new ApiError('Nome deve ser maior que 3.', 400)
+    }
+
+    if (!jogo_id) {
+        throw new ApiError('Jogo não encontrado.', 404)
     }
 
     await pool.query(`INSERT INTO avaliacao (jogo_id, nome_avaliador, nota, review) 
@@ -37,27 +41,41 @@ export async function criaAvaliacaoService(body){
 
 // --------------------- LISTA ---------------------
 
-export async function listaAvaliacaoService(jogo_id){
-    let query = `SELECT * FROM avaliacao`
+export async function listaAvaliacaoService(jogo_id) {
+    let query = `
+        SELECT
+            avaliacao.*,
+            jogo.titulo AS nome_jogo
+        FROM avaliacao
+        INNER JOIN jogo
+            ON avaliacao.jogo_id = jogo.id
+    `
+
     const valores = []
 
-    if (typeof jogo_id !== "number" || isNaN(jogo_id)){ // <-- se for diferente de number ou not a number
-        throw new ApiError('ID do jogo deve ser number', 404)
-    }
+    if (jogo_id !== undefined) {
+        const id = Number(jogo_id)
 
-    if (jogo_id){
-        query += ` WHERE jogo_id = $1`
-        valores.push(jogo_id)
+        if (!Number.isInteger(id) || id <= 0) {
+            throw new ApiError('ID do jogo inválido', 400)
+        }
+
+        query += ' WHERE avaliacao.jogo_id = $1'
+        valores.push(id)
     }
 
     const avaliacoes = await pool.query(query, valores)
 
-    return avaliacoes['rows']
+    return avaliacoes.rows
 }
 
 // --------------------- BUSCA ---------------------
 
 export async function buscaAvaliacaoService(id){
+
+    if (isNaN(id)) {
+        throw new ApiError('Avaliação não existe', 404)
+    }
 
     const avaliacao = await pool.query(`SELECT * FROM avaliacao WHERE id = $1`, [id])
 

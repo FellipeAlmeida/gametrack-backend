@@ -17,11 +17,12 @@ export async function criaAvaliacao(req, res){
 
 export async function listaAvaliacao(req, res){
     try{
-        const jogo_id = Number(req.query.jogo_id)
+        const jogo_id = req.query.jogo_id
 
         const avaliacoes = await listaAvaliacaoService(jogo_id)
         return res.status(200).json({avaliacoes: avaliacoes})
     } catch (error) {
+        console.error('Erro ao listar avaliações:', error)
         return res.status(error.statusCode || 500).json({erro: error.message})
     }
 }

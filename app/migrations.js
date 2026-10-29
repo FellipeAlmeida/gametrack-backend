@@ -21,7 +21,6 @@ async function conectaEPopulaBanco() {
             CREATE TABLE IF NOT EXISTS jogo (
                 id SERIAL PRIMARY KEY,
                 titulo VARCHAR NOT NULL UNIQUE,
-                capa_url VARCHAR,
                 descricao TEXT,
                 genero VARCHAR,
                 plataforma plataforma_enum[],

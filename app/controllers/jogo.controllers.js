@@ -4,7 +4,7 @@ import { criaJogoService, listaJogoService, buscaJogoService, deletaJogoService,
 
 export async function criaJogo(req, res){
     try{
-        const { titulo, capa_url, descricao, genero, plataforma, nota_media, criado_em } = req.body
+        const { titulo, descricao, genero, plataforma, nota_media, criado_em } = req.body
 
         await criaJogoService(req.body)
         return res.status(201).json({message: 'Jogo criado com sucesso!'})
@@ -43,7 +43,7 @@ export async function buscaJogo(req, res){
 
 export async function editaJogo(req, res){
     try{
-        const { titulo, capa_url, descricao, genero, plataforma, nota_media, criado_em } = req.body
+        const { titulo, descricao, genero, plataforma, nota_media, criado_em } = req.body
         const id = req.params.id
         
         await editaJogoService(id, req.body)

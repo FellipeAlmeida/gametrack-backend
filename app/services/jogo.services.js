@@ -4,7 +4,7 @@ import ApiError from '../error/api.error.js'
 // --------------------- CRIA ---------------------
 
 export async function criaJogoService(body){
-    const { titulo, capa_url, descricao, genero, plataforma } = body
+    const { titulo, descricao, genero, plataforma } = body
 
     const plataformasValidas = [
         'PC',
@@ -31,9 +31,9 @@ export async function criaJogoService(body){
         throw new ApiError('Jogo deve ter titulo.', 400)
     }
 
-    await pool.query(`INSERT INTO jogo (titulo, capa_url, descricao, genero, plataforma) 
-        VALUES ($1, $2, $3, $4, $5)`, 
-        [titulo, capa_url, descricao, genero, plataforma]
+    await pool.query(`INSERT INTO jogo (titulo, descricao, genero, plataforma) 
+        VALUES ($1, $2, $3, $4)`, 
+        [titulo, descricao, genero, plataforma]
     )
 }
 
@@ -60,22 +60,28 @@ export async function listaJogoService(genero){
 
 // --------------------- BUSCA ---------------------
 
-export async function buscaJogoService(id){
-
-    const jogo = await pool.query(`SELECT * FROM jogo WHERE id = $1`, [id])
-
-    if (jogo.rows.length == 0){ 
+export async function buscaJogoService(id) {
+    if (!Number.isInteger(Number(id)) || Number(id) <= 0) {
         throw new ApiError('Jogo não existe', 404)
     }
 
-    return jogo['rows']
+    const jogo = await pool.query(
+        `SELECT * FROM jogo WHERE id = $1`,
+        [Number(id)]
+    )
+
+    if (jogo.rows.length === 0) {
+        throw new ApiError('Jogo não existe', 404)
+    }
+
+    return jogo.rows[0]
 }
 
 // --------------------- EDITA ---------------------
 
 export async function editaJogoService(id, body){
 
-    const { titulo, capa_url, descricao, genero, plataforma } = body
+    const { titulo, descricao, genero, plataforma } = body
 
     const jogo = await pool.query(`SELECT * FROM jogo WHERE id = $1`, [id])
 
@@ -83,7 +89,7 @@ export async function editaJogoService(id, body){
         throw new ApiError('Jogo não existe', 404)
     }
 
-    if (!titulo && !capa_url && !descricao && !genero && !plataforma) {
+    if (!titulo && !descricao && !genero && !plataforma) {
         throw new ApiError('Informe os dados que deseja atualizar.', 400);
     }
 
@@ -91,8 +97,8 @@ export async function editaJogoService(id, body){
         throw new ApiError('Titulo não pode ser undefined.', 400);
     }
 
-    await pool.query(`UPDATE jogo SET titulo = $1, capa_url = $2, descricao = $3, genero = $4, plataforma = $5 WHERE id = $6`, 
-    [titulo, capa_url, descricao, genero, plataforma, id])
+    await pool.query(`UPDATE jogo SET titulo = $1 , descricao = $2, genero = $3, plataforma = $4 WHERE id = $5`, 
+    [titulo, descricao, genero, plataforma, id])
 }
 
 // --------------------- DELETA ---------------------
