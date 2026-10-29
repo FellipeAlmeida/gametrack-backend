@@ -36,6 +36,26 @@ docker compose up -d --build
 
 ## Saídas da Bancada
 
+### Listagem de jogos
+
+![alt text](image-1.png)
+
+### Listagem por filtro de genero
+
+![alt text](image-2.png)
+
+### Jogo não existente
+
+![alt text](image-3.png)
+
+### Formulário de avaliação sucesso
+
+![alt text](image-4.png)
+
+### Formulário de avaliação erro
+
+![alt text](image-5.png)
+
 ## Resposta
 
 #### "não preciso de back-end, faço tudo em JavaScript no navegador, inclusive acessar o banco de dados".
